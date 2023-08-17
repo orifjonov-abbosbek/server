@@ -1,10 +1,3 @@
-/**
- * @swagger
- * tags:
- *   name: Authentication
- *   description: User authentication and registration APIs
- */
-
 const express = require("express");
 const { body } = require("express-validator");
 const authController = require("../controller/auth");
@@ -31,7 +24,7 @@ const router = express.Router();
  *               password:
  *                 type: string
  *     responses:
- *       200:
+ *       201:
  *         description: User registered successfully
  *       400:
  *         description: Validation error or user already exists
@@ -46,6 +39,37 @@ router.post(
     body("password").isLength({ min: 6 }),
   ],
   authController.registerUser
+);
+
+/**
+ * @swagger
+ * /api/auth/login:
+ *   post:
+ *     summary: Authenticate a user
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: User authenticated successfully
+ *       400:
+ *         description: Validation error or invalid credentials
+ *       500:
+ *         description: Internal server error
+ */
+router.post(
+  "/login",
+  [body("email").isEmail(), body("password").notEmpty()],
+  authController.loginUser
 );
 
 module.exports = router;
