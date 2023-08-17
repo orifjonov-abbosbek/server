@@ -1,13 +1,24 @@
+// app.js
 const express = require("express");
-const app = express();
-const authRoutes = require("./routes/authRouter");
+const cors = require("cors");
+const authRouter = require("./routes/authRouter");
+const userRouter = require("./routes/userRouter");
+const sequelize = require("./config/db");
 
+const app = express();
+app.use(cors());
 app.use(express.json());
 
-// Set up routes
-app.use("/auth", authRoutes);
+app.use("/api/auth", authRouter);
+app.use("/api", userRouter);
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+sequelize
+  .sync({ force: false })
+  .then(() => {
+    app.listen(10000, () => {
+      console.log("Server is running on port 10000");
+    });
+  })
+  .catch((error) => {
+    console.error("Error syncing database:", error);
+  });
