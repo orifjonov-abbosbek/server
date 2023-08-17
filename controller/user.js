@@ -21,10 +21,10 @@ exports.deleteUser = async (req, res) => {
   }
 };
 
-exports.blockUser = async (req, res) => {
+exports.blockUserByEmail = async (req, res) => {
   try {
-    const { id } = req.params;
-    await User.update({ status: "blocked" }, { where: { id } });
+    const { email } = req.params;
+    await User.update({ status: "blocked" }, { where: { email } });
     res.status(200).json({ message: "User blocked successfully" });
   } catch (error) {
     console.error(error);
@@ -32,22 +32,14 @@ exports.blockUser = async (req, res) => {
   }
 };
 
-exports.unBlockUser = async (req, res) => {
+
+exports.unBlockUserByEmail = async (req, res) => {
   try {
-    const { id } = req.params;
-    await validateStatus("unblocked"); // Corrected status value
-    await User.update({ status: "active" }, { where: { id } });
+    const { email } = req.params;
+    await User.update({ status: "active" }, { where: { email } });
     res.status(200).json({ message: "User unblocked successfully" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
-
-
-async function validateStatus(status) {
-  if (status !== "blocked" && status !== "unblocked") {
-    throw new Error("Invalid status value");
-  }
-}
-

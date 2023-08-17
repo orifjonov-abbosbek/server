@@ -47,44 +47,45 @@ router.delete("/users/:id", userController.deleteUser);
 
 /**
  * @swagger
- * /api/users/{id}/block:
- *   put:
- *     summary: Block a user by ID
+ * /api/user/block/{email}:
+ *   patch:
+ *     summary: Block a user by email
  *     tags: [Users]
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: email
  *         required: true
- *         description: ID of the user to be blocked
+ *         description: Email of the user to be blocked
  *         schema:
- *           type: integer
+ *           type: string
  *     responses:
  *       200:
  *         description: User blocked successfully
  *       500:
  *         description: Internal server error
  */
-router.put("/users/:id/block", userController.blockUser);
+router.patch("/user/block/:email", userController.blockUserByEmail);
 
 /**
  * @swagger
- * /api/users/{id}/unblock:
- *   put:
- *     summary: Unblock a user by ID
+ * /api/user/unblock/{email}:
+ *   patch:
+ *     summary: Unblock a user by email
  *     tags: [Users]
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: email
  *         required: true
- *         description: ID of the user to be unblocked
+ *         description: Email of the user to be unblocked
  *         schema:
- *           type: integer
+ *           type: string
  *     responses:
  *       200:
  *         description: User unblocked successfully
  *       500:
  *         description: Internal server error
  */
-router.put("/users/:id/unblock", userController.unBlockUser);
+router.patch("/user/unblock/:email", userController.unBlockUserByEmail);
+
 
 module.exports = router;
