@@ -35,8 +35,8 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 sequelize
   .sync({ force: false })
   .then(() => {
-    app.listen(10000, () => {
-      console.log("Server is running on port 10000");
+    app.listen(4000, () => {
+      console.log("Server is running on port 4000");
     });
   })
   .catch((error) => {

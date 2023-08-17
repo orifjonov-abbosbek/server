@@ -7,7 +7,7 @@ const sequelize = new Sequelize({
   database: "defaultdb",
   username: "avnadmin",
   password: "AVNS_aZhzeofnfLIMXWPFuK5",
-
+ 
 });
 
 module.exports = sequelize;
